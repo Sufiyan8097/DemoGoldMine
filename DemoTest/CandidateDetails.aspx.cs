@@ -22,20 +22,20 @@ namespace DemoTest
             }
         }
 
-        public void GetData()
-        {
-            SqlCommand cmmd = new SqlCommand("select Id,Dsg from Designation  order by dsg asc", conn);
-            SqlDataAdapter dat = new SqlDataAdapter(cmmd);
-            DataTable dt = new DataTable();
-            dat.Fill(dt);
-            ddApplied.DataSource = dt;
-           // ddApplied.DataBind();
-            ddApplied.DataTextField = "Dsg";
-            ddApplied.DataValueField = "Id";
-            ddApplied.DataBind();
+        //public void GetData()
+        //{
+        //    SqlCommand cmmd = new SqlCommand("select Id,Dsg from Designation  order by dsg asc", conn);
+        //    SqlDataAdapter dat = new SqlDataAdapter(cmmd);
+        //    DataTable dt = new DataTable();
+        //    dat.Fill(dt);
+        //    ddApplied.DataSource = dt;
+        //   // ddApplied.DataBind();
+        //    ddApplied.DataTextField = "Dsg";
+        //    ddApplied.DataValueField = "Id";
+        //    ddApplied.DataBind();
 
 
-        }
+        //}
 
         protected void btnsubmit_Click(object sender, EventArgs e)
         {
