@@ -18,7 +18,7 @@ namespace DemoTest
             if (!IsPostBack)
             {
                 GetData();
-              //  GridData();
+              
             }
         }
 
@@ -29,7 +29,6 @@ namespace DemoTest
             DataTable dt = new DataTable();
             dat.Fill(dt);
             ddcan.DataSource = dt;
-            // ddApplied.DataBind();
             ddcan.DataTextField = "CandidateName";
             ddcan.DataValueField = "Id";
             ddcan.DataBind();
@@ -43,14 +42,14 @@ namespace DemoTest
             DataTable dt = new DataTable();
             dat.Fill(dt);
             GridView1.DataSource = dt;
-            // ddApplied.DataBind();
+  
             GridView1.DataBind();
             
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            SqlCommand cmmd = new SqlCommand("select Id,CandidateName,Experience,CTC,Applied,Expected from CandidateDetails where CandidateName='"+ ddcan.SelectedItem.Text+"'", conn);
+            SqlCommand cmmd = new SqlCommand("select Id,CandidateName,Experience,CTC,Applied,Expected,Status from CandidateDetails where CandidateName='"+ ddcan.SelectedItem.Text+"'", conn);
             SqlDataAdapter dat = new SqlDataAdapter(cmmd);
             DataTable dt = new DataTable();
             dat.Fill(dt);
@@ -66,10 +65,10 @@ namespace DemoTest
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (e.Row.RowType == DataControlRowType.DataRow && GridView1.EditIndex==e.Row.RowIndex)
             {
                 conn.Open();
-                DropDownList dropDownList1 = (e.Row.FindControl("DropDownList2") as DropDownList);
+                DropDownList dropDownList1 = (e.Row.FindControl("ddstatus") as DropDownList);
                 SqlCommand cmd = new SqlCommand("select * from CStatus", conn);
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -86,20 +85,27 @@ namespace DemoTest
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Label lbl = GridView1.Rows[e.RowIndex].FindControl("Label1") as Label;
-            DropDownList ddlist = GridView1.Rows[e.RowIndex].FindControl("DropDownList2") as DropDownList;
-            conn.Open(); 
-            SqlCommand cmmd = new SqlCommand("Update CandidateDetails set Status='" + ddlist.SelectedItem.Text+ "' where Id='" + Convert.ToInt32(lbl.Text) + "'");
+            
+            string status = (GridView1.Rows[e.RowIndex].FindControl("ddstatus") as DropDownList).SelectedItem.Text;
+            string candidateId = GridView1.DataKeys[e.RowIndex].Value.ToString();
+            
+            SqlCommand cmmd = new SqlCommand("Update CandidateDetails set Status='" + status + "' where Id='" + Convert.ToInt32(candidateId) + "'", conn);
+            conn.Open();
             cmmd.ExecuteNonQuery();
             conn.Close();
-           // GridView1.EditIndex = -1;
-            GridView1.DataBind();
+            Response.Redirect(Request.Url.AbsoluteUri);
         }
 
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridView1.EditIndex = e.NewEditIndex;
-            GridView1.DataBind();
+            Button1_Click(sender, e);
+        }
+
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            Button1_Click(sender, e);
         }
     }
 }

@@ -90,7 +90,7 @@ Text="Show Data" OnClick="Button1_Click" />
                         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
                             BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellPadding="4" 
                             CellSpacing="2" ForeColor="Black" OnRowDataBound="GridView1_RowDataBound" DataKeyNames="Id"
-                            OnRowUpdating="GridView1_RowUpdating" OnRowEditing="GridView1_RowEditing">
+                            OnRowUpdating="GridView1_RowUpdating" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit">
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
                                     <ItemTemplate>
@@ -104,15 +104,15 @@ Text="Show Data" OnClick="Button1_Click" />
                                 <asp:BoundField DataField="Expected" HeaderText="Expected" />
                                 <asp:TemplateField HeaderText="Status">
                                     <ItemTemplate>
-                                        <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="true">
+                                        <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("Status") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                         <asp:DropDownList ID="ddstatus" runat="server" AutoPostBack="true">
                                         </asp:DropDownList>
-                                    </ItemTemplate>
+                                    </EditItemTemplate>
+                                   
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Button">
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnupdate" runat="server" Text="Update Status" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                              <asp:CommandField ShowEditButton="true" />
 
                             </Columns>
                             <FooterStyle BackColor="#CCCCCC" />
