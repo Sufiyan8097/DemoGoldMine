@@ -16,6 +16,9 @@
 		<div class="form-v2-content">
 			
 			<form class="form-detail" id="myform" runat="server">
+				<div style="margin-left: 613px;width: 98px;height: 30px;">
+						<asp:Button ID="btnlogout" class="register" Text="LOG OUT" runat="server" OnClick="btnlogout_Click" CausesValidation="false" />
+					</div>
 				<h2>Candidate Details</h2>
 				<div class="form-row">
 					<label>Candidate Name:</label>
@@ -66,9 +69,7 @@
 					<div style="width:120px;width: 94px;height: 41px;">
 						<asp:Button ID="btnsubmit" class="register" Text="Submit" runat="server" OnClick="btnsubmit_Click"  />
 					</div>
-					<div style="margin-left: 613px;width: 98px;height: 30px;">
-						<asp:Button ID="btnlogout" class="register" Text="LOG OUT" runat="server" OnClick="btnlogout_Click" CausesValidation="false" />
-					</div>
+					
 					<%--<input type="submit" class="register" value="Submit">--%>
 
 				</div>
